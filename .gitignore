@@ -1,0 +1,4 @@
+ai_library.db
+__pycache__/
+*.pyc
+.env

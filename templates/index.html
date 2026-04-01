@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>電脳図書館 - Cyber Library</title>
+    <link rel="icon" href="{{ url_for('static', filename='logo.png') }}" type="image/png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --cyber-blue: #00fff2;
+            --cyber-pink: #ff00de;
+            --cyber-deep: rgba(10, 10, 25, 0.9);
+        }
+
+        body {
+            background-image: url("{{ url_for('static', filename='cyber_bg.jpg') }}") !important;
+            background-size: cover !important;
+            background-position: center center !important;
+            background-attachment: fixed !important;
+            background-color: #0d0d0d !important; 
+            color: #e0e0e0 !important;
+            font-family: 'Segoe UI', sans-serif;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .neon-text {
+            color: var(--cyber-blue);
+            text-shadow: 0 0 10px var(--cyber-blue), 0 0 20px var(--cyber-blue);
+            font-weight: bold;
+        }
+
+        .navbar-cyber {
+            background-color: rgba(0, 0, 0, 0.95) !important;
+            border-bottom: 2px solid var(--cyber-pink);
+            box-shadow: 0 0 20px rgba(255, 0, 222, 0.5);
+        }
+
+        .cyber-card {
+            background: var(--cyber-deep) !important;
+            border: 1px solid var(--cyber-blue) !important;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 255, 242, 0.2);
+            transition: 0.3s;
+            backdrop-filter: blur(5px);
+        }
+
+        .cyber-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 25px rgba(0, 255, 242, 0.6);
+            border-color: #fff !important;
+        }
+
+        .card-title { color: var(--cyber-blue) !important; font-weight: bold; }
+
+        .btn-cyber {
+            border: 1px solid var(--cyber-blue) !important;
+            color: var(--cyber-blue) !important;
+            background: transparent !important;
+            transition: 0.3s;
+        }
+
+        .btn-cyber:hover {
+            background: var(--cyber-blue) !important;
+            color: #000 !important;
+            box-shadow: 0 0 15px var(--cyber-blue);
+        }
+
+        .section-header {
+            padding: 8px 15px;
+            border-left: 5px solid var(--cyber-pink) !important;
+            background: rgba(255, 0, 222, 0.1) !important;
+            margin-bottom: 25px;
+        }
+
+        .btn-archive {
+            border: 1px solid var(--cyber-pink) !important;
+            color: var(--cyber-pink) !important;
+            font-size: 0.7rem;
+            letter-spacing: 1px;
+            transition: 0.3s;
+        }
+
+        .btn-archive:hover {
+            background: var(--cyber-pink) !important;
+            color: #fff !important;
+            box-shadow: 0 0 15px var(--cyber-pink);
+        }
+
+        .footer-text {
+            color: #b0fbff;
+            text-shadow: 0 0 5px rgba(0, 255, 242, 0.5);
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-cyber mb-5">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="/">
+                <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" width="45" height="45" class="me-3">
+                <span class="neon-text h2 mb-0">電脳図書館</span>
+            </a>
+            <div class="d-flex gap-2">
+                {% if current_user.is_authenticated %}
+                    <a href="/post" class="btn btn-sm btn-cyber">データ投稿</a>
+                    <a href="/mypage/{{ current_user.username }}" class="btn btn-sm btn-outline-light">マイゲート</a>
+                    <a href="/admin" class="btn btn-sm btn-outline-warning">分析コア</a>
+                    <a href="/logout" class="btn btn-sm btn-outline-danger">切断</a>
+                {% else %}
+                    <a href="/login" class="btn btn-sm btn-cyber">接続 / 登録</a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    <div class="container pb-5">
+        <div class="row mb-5">
+            <div class="col-md-4 mb-4">
+                <div class="section-header"><h3 class="h5 mb-0 text-white">>> HOT_ARCHIVE (3d)</h3></div>
+                {% for post in hot_posts %}
+                <div class="card cyber-card mb-3">
+                    <div class="card-body">
+                        <h6 class="card-title">{{ post.title }}</h6>
+                        <p class="small mb-2 text-info">USER: {{ post.username }} / ACCESS: {{ post.views }}</p>
+                        <div class="text-end"><a href="/view/{{ post.id }}" class="btn btn-sm btn-cyber">アクセス</a></div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <div class="col-md-4 mb-4">
+                <div class="section-header"><h3 class="h5 mb-0 text-white">>> RECENT_UPLOADS</h3></div>
+                {% for post in new_posts %}
+                <div class="card cyber-card mb-3">
+                    <div class="card-body">
+                        <h6 class="card-title">{{ post.title }}</h6>
+                        <p class="small mb-2 text-info">UPLOAD: {{ post.created_at | time_since }}</p>
+                        <div class="text-end"><a href="/view/{{ post.id }}" class="btn btn-sm btn-cyber">アクセス</a></div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <div class="col-md-4 mb-4">
+                <div class="section-header"><h3 class="h5 mb-0 text-white">>> LEGACY_RECORDS</h3></div>
+                {% for post in evergreen_posts %}
+                <div class="card cyber-card mb-3">
+                    <div class="card-body">
+                        <h6 class="card-title">{{ post.title }}</h6>
+                        <p class="small mb-2 text-info">TOTAL_ACCESS: {{ post.views }}</p>
+                        <div class="text-end"><a href="/view/{{ post.id }}" class="btn btn-sm btn-cyber">アクセス</a></div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <hr class="my-5" style="border-color: var(--cyber-pink); opacity: 0.3;">
+
+        {% for genre_name, posts in genre_data.items() %}
+            {% if posts %}
+            <div class="mb-5">
+                <div class="section-header d-flex justify-content-between align-items-center">
+                    <h3 class="h5 mb-0 text-white">>> CATEGORY: {{ genre_name }}</h3>
+                    <a href="/genre/{{ genre_name }}" class="btn btn-sm btn-archive">
+                        VIEW_ALL_ARCHIVES >>
+                    </a>
+                </div>
+                <div class="row">
+                    {% for post in posts %}
+                    <div class="col-md-3 mb-4">
+                        <div class="card cyber-card h-100">
+                            <div class="card-body d-flex flex-column">
+                                <h6 class="card-title small mb-2">{{ post.title }}</h6>
+                                <div class="mt-auto pt-2">
+                                    <p class="small text-info mb-2" style="font-size: 0.75rem;">ID: {{ post.username }}</p>
+                                    <a href="/view/{{ post.id }}" class="btn btn-sm btn-cyber w-100">詳細展開</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+    <footer class="mt-5 py-5" style="background: rgba(0, 0, 0, 0.9); border-top: 1px solid var(--cyber-pink); box-shadow: 0 -10px 30px rgba(255, 0, 222, 0.3);">
+        <div class="container text-start">
+            <div class="row">
+                <div class="col-md-8 mb-4">
+                    <h5 class="neon-text mb-4">>> SYSTEM_INFO: このページについて</h5>
+                    <p class="small footer-text">
+                        「電脳図書館」は、人類が蓄積したAIプロンプトという名の「叡智」をアーカイブし、次世代のクリエイターへと繋ぐためのデータストレージです。<br>
+                        投稿されたプロンプトは、その有効性やトレンドがリアルタイムで解析され、最適化された知識として共有されます。<br>
+                        接続者の皆様は、自由なアクセスとデータアップロードが許可されています。
+                    </p>
+                </div>
+                <div class="col-md-4 text-md-end align-self-end">
+                    <p class="mb-0" style="color: var(--cyber-blue); font-size: 0.95rem; letter-spacing: 1.5px; font-weight: bold;">
+                        © SuguriMori / 979works
+                    </p>
+                    <p class="small text-muted mt-2" style="font-size: 0.75rem;">EST. 2026 / SERVER_STATUS: CONNECTED</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
