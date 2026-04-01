@@ -14,17 +14,18 @@
             --cyber-deep: rgba(10, 10, 25, 0.9);
         }
 
-        body {
-            background-image: url("{{ url_for('static', filename='cyber_bg.jpg') }}") !important;
-            background-size: cover !important;
-            background-position: center center !important;
-            background-attachment: fixed !important;
-            background-color: #0d0d0d !important; 
-            color: #e0e0e0 !important;
-            font-family: 'Segoe UI', sans-serif;
-            min-height: 100vh;
-            margin: 0;
-        }
+       body {
+        /* 背景画像の指定を .png に変更 */
+        background-image: url("{{ url_for('static', filename='cyber_bg.png') }}") !important;
+        background-size: cover !important;
+        background-position: center center !important;
+        background-attachment: fixed !important;
+        background-color: #0d0d0d !important; 
+        color: #e0e0e0 !important;
+        font-family: 'Segoe UI', sans-serif;
+        min-height: 100vh;
+        margin: 0;
+       }
 
         .neon-text {
             color: var(--cyber-blue);

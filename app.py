@@ -6,18 +6,21 @@ from datetime import datetime, timedelta
 import os
 
 app = Flask(__name__)
-# データベース設定の心臓部
-db = SQLAlchemy(app)
 
-app.config['SECRET_KEY'] = 'your-cyber-secret-key'
-# Renderの環境変数があればPostgreSQL、なければローカルのSQLiteを使用
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'sqlite:///ai_library.db')
+# --- 1. データベース設定 (先に定義) ---
+# 環境変数 DATABASE_URL を取得。なければ SQLite を使う
+uri = os.environ.get('DATABASE_URL', 'sqlite:///ai_library.db')
 
-# SQLAlchemyの仕様対策（postgres:// を postgresql:// に置換）
-if app.config['SQLALCHEMY_DATABASE_URI'].startswith("postgres://"):
-    app.config['SQLALCHEMY_DATABASE_URI'] = app.config['SQLALCHEMY_DATABASE_URI'].replace("postgres://", "postgresql://", 1)
+# postgres:// を postgresql:// に変換 (SQLAlchemyの仕様対策)
+if uri.startswith("postgres://"):
+    uri = uri.replace("postgres://", "postgresql://", 1)
 
+app.config['SQLALCHEMY_DATABASE_URI'] = uri
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SECRET_KEY'] = 'your-cyber-secret-key' # 本番用シークレットキー
+
+# --- 2. データベース初期化 (設定の後に実行) ---
+db = SQLAlchemy(app)
 
 # --- カスタムフィルター: 相対時間表示 ---
 @app.template_filter('time_since')
