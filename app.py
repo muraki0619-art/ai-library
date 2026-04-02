@@ -141,7 +141,7 @@ def login():
             is_admin_flag = (username == "iorin") # 管理者ユーザー名
             new_user = User(
                 username=username, 
-                password=generate_password_hash(password, method='pbkdf2:sha256'),
+                password=generate_password_hash(password),
                 is_admin=is_admin_flag,
                 is_paid=is_admin_flag
             )
