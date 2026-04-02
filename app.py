@@ -118,13 +118,13 @@ def load_user(user_id):
 @app.route('/')
 def index():
     three_days_ago = datetime.utcnow() - timedelta(days=3)
-    hot_posts = Post.query.filter(Post.created_at >= three_days_ago).order_by(Post.views.desc()).limit(5).all()
-    if not hot_posts: hot_posts = Post.query.order_by(Post.views.desc()).limit(5).all()
-    new_posts = Post.query.order_by(Post.created_at.desc()).limit(5).all()
-    evergreen_posts = Post.query.order_by(Post.views.desc()).limit(5).all()
+    hot_posts = db.session.execute(db.select(Post).filter(Post.created_at >= three_days_ago).order_by(Post.views.desc()).limit(5)).scalars().all()
+    if not hot_posts: hot_posts = db.session.execute(db.select(Post).order_by(Post.views.desc()).limit(5)).scalars().all()
+    new_posts = db.session.execute(db.select(Post).order_by(Post.created_at.desc()).limit(5)).scalars().all()
+    evergreen_posts = db.session.execute(db.select(Post).order_by(Post.views.desc()).limit(5)).scalars().all()
 
     genres = ['小説', 'エッセイ', '論文', '詩', 'その他']
-    genre_data = {g: Post.query.filter_by(genre=g).order_by(Post.views.desc()).limit(4).all() for g in genres}
+    genre_data = {g: db.session.execute(db.select(Post).filter_by(genre=g).order_by(Post.views.desc()).limit(4)).scalars().all() for g in genres}
 
     return render_template('index.html', hot_posts=hot_posts, new_posts=new_posts, evergreen_posts=evergreen_posts, genre_data=genre_data)
 
@@ -133,7 +133,7 @@ def login():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-        user = User.query.filter_by(username=username).first()
+        user = db.session.execute(db.select(User).filter_by(username=username)).scalar_one_or_none()
         if user and check_password_hash(user.password, password):
             login_user(user)
             return redirect(url_for('index'))
@@ -183,7 +183,7 @@ def view_post(post_id):
 
 @app.route('/genre/<name>')
 def genre_view(name):
-    posts = Post.query.filter_by(genre=name).order_by(Post.created_at.desc()).all()
+    posts = db.session.execute(db.select(Post).filter_by(genre=name).order_by(Post.created_at.desc())).scalars().all()
     return render_template('genre.html', genre_name=name, posts=posts)
 
 @app.route('/mypage/<username>')
@@ -191,7 +191,7 @@ def genre_view(name):
 def mypage(username):
     if current_user.username != username:
         return "権限がありません", 403
-    posts = Post.query.filter_by(username=username).all()
+    posts = db.session.execute(db.select(Post).filter_by(username=username)).scalars().all()
     return render_template('mypage.html', username=username, posts=posts)
 
 @app.route('/edit/<int:post_id>', methods=['GET', 'POST'])
@@ -214,9 +214,9 @@ def edit_post(post_id):
 def admin_dashboard():
     if not current_user.is_admin and not current_user.is_paid:
         return render_template('upgrade.html'), 403
-    total_posts = Post.query.count()
-    top_posts = Post.query.order_by(Post.views.desc()).limit(3).all()
-    all_posts = Post.query.all()
+    total_posts = db.session.execute(db.select(db.func.count()).select_from(Post)).scalar()
+    top_posts = db.session.execute(db.select(Post).order_by(Post.views.desc()).limit(3)).scalars().all()
+    all_posts = db.session.execute(db.select(Post)).scalars().all()
     ai_stats = {}
     for p in all_posts:
         ai_stats[p.ai_model] = ai_stats.get(p.ai_model, 0) + 1
@@ -230,7 +230,7 @@ def update_user():
     if current_user.username != old_name:
         return "権限がありません", 403
     current_user.username = new_name
-    user_posts = Post.query.filter_by(username=old_name).all()
+    user_posts = db.session.execute(db.select(Post).filter_by(username=old_name)).scalars().all()
     for post in user_posts:
         post.username = new_name
     db.session.commit()
