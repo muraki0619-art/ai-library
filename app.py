@@ -4,6 +4,47 @@ from flask_login import UserMixin, LoginManager, login_user, logout_user, login_
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime, timedelta
 import os
+import stripe
+
+# Stripeのテスト用秘密鍵（Stripeダッシュボードから取得したものに後で置き換えます）
+stripe.api_key = os.environ.get('STRIPE_SECRET_KEY', 'sk_test_51P...') 
+
+# --- 有料プラン決済セッションの作成 ---
+@app.route('/create-checkout-session', methods=['POST'])
+@login_required
+def create_checkout_session():
+    try:
+        # Stripeの決済ページを作成
+        checkout_session = stripe.checkout.Session.create(
+            payment_method_types=['card'],
+            line_items=[{
+                'price_data': {
+                    'currency': 'jpy',
+                    'product_data': {'name': '電脳図書館 プロプラン'},
+                    'unit_amount': 2980, # 金額（円）
+                },
+                'quantity': 1,
+            }],
+            mode='payment',
+            # 決済成功時とキャンセル時の戻り先URL
+            success_url=url_for('payment_success', _external=True),
+            cancel_url=url_for('index', _external=True),
+            # 誰が支払ったか判別するためにユーザーIDを渡す
+            client_reference_id=str(current_user.id),
+        )
+        return redirect(checkout_session.url, code=303)
+    except Exception as e:
+        return str(e)
+
+# --- 決済成功時の仮ページ ---
+@app.route('/payment-success')
+@login_required
+def payment_success():
+    # 本来はここでWebhook（通知）を受けてDBを更新しますが、
+    # まずはテストとして自分を手動で有料化する処理を入れます
+    current_user.is_paid = True
+    db.session.commit()
+    return "🚀 決済が承認されました！あなたの権限が「プロプラン」にアップグレードされました。<a href='/'>トップへ戻る</a>"
 
 app = Flask(__name__)
 
