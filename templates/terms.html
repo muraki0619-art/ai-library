@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>利用規約 - 電脳図書館</title>
+    <link rel="icon" href="{{ url_for('static', filename='logo.png') }}" type="image/png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --cyber-blue: #00fff2;
+            --cyber-pink: #ff00de;
+        }
+        body {
+            background-image: url("{{ url_for('static', filename='cyber_bg.png') }}") !important;
+            background-size: cover !important;
+            background-position: center center !important;
+            background-attachment: fixed !important;
+            background-color: #0d0d0d !important;
+            color: #e0e0e0 !important;
+            font-family: 'Segoe UI', sans-serif;
+            min-height: 100vh;
+        }
+        .neon-text {
+            color: var(--cyber-blue);
+            text-shadow: 0 0 10px var(--cyber-blue), 0 0 20px var(--cyber-blue);
+            font-weight: bold;
+        }
+        .navbar-cyber {
+            background-color: rgba(0, 0, 0, 0.95) !important;
+            border-bottom: 2px solid var(--cyber-pink);
+            box-shadow: 0 0 20px rgba(255, 0, 222, 0.5);
+        }
+        .cyber-card {
+            background: rgba(10, 10, 25, 0.9) !important;
+            border: 1px solid var(--cyber-blue) !important;
+            border-radius: 10px;
+            backdrop-filter: blur(5px);
+        }
+        .section-title {
+            color: var(--cyber-blue);
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            border-left: 3px solid var(--cyber-pink);
+            padding-left: 10px;
+        }
+        .body-text {
+            color: #b0fbff;
+            font-size: 0.85rem;
+            line-height: 2;
+            text-shadow: 0 0 5px rgba(0, 255, 242, 0.3);
+        }
+        .footer-links a {
+            color: #b0fbff;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            text-decoration: none;
+            opacity: 0.8;
+        }
+        .footer-links a:hover {
+            opacity: 1;
+            text-shadow: 0 0 8px var(--cyber-blue);
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-cyber mb-5">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="/">
+                <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" width="45" height="45" class="me-3">
+                <span class="neon-text h2 mb-0">電脳図書館</span>
+            </a>
+            <a href="/" style="color: var(--cyber-blue); font-size: 0.8rem; letter-spacing: 2px; text-decoration: none;">&lt;&lt; TOP へ戻る</a>
+        </div>
+    </nav>
+
+    <div class="container" style="max-width: 800px; padding-bottom: 60px;">
+        <h1 class="neon-text mb-5" style="font-size: 1.4rem; letter-spacing: 3px;">>> TERMS_OF_SERVICE: 利用規約</h1>
+
+        <div class="cyber-card p-4 mb-4">
+            <p class="body-text">
+                本利用規約（以下「本規約」）は、電脳図書館（以下「本サービス」）の利用条件を定めるものです。ユーザーの皆様には、本規約に同意のうえ、本サービスをご利用いただきます。
+            </p>
+        </div>
+
+        <div class="cyber-card p-4 mb-4">
+            <h2 class="section-title mb-3">第1条　適用</h2>
+            <p class="body-text">
+                本規約は、本サービスの利用に関わる一切の関係に適用されます。本サービスを利用した時点で、本規約に同意したものとみなします。
+            </p>
+        </div>
+
+        <div class="cyber-card p-4 mb-4">
+            <h2 class="section-title mb-3">第2条　アカウント登録</h2>
+            <ul class="body-text" style="padding-left: 1.2rem;">
+                <li>ユーザーは正確な情報を登録するものとします</li>
+                <li>アカウントは本人のみが使用できます</li>
+                <li>パスワードの管理はユーザー自身の責任で行うものとします</li>
+                <li>アカウントの不正利用が判明した場合は速やかにご連絡ください</li>
+            </ul>
+        </div>
+
+        <div class="cyber-card p-4 mb-4">
+            <h2 class="section-title mb-3">第3条　禁止事項</h2>
+            <p class="body-text mb-2">ユーザーは以下の行為を行ってはなりません。</p>
+            <ul class="body-text" style="padding-left: 1.2rem;">
+                <li>法令または公序良俗に違反する行為</li>
+                <li>他のユーザーまたは第三者への誹謗中傷・差別的表現</li>
+                <li>虚偽の情報の投稿</li>
+                <li>著作権・商標権等の知的財産権を侵害する行為</li>
+                <li>本サービスの運営を妨害する行為</li>
+                <li>営業活動・宣伝・スパム行為</li>
+                <li>不正アクセス・クラッキング等</li>
+                <li>その他、当サービスが不適切と判断する行為</li>
+            </ul>
+        </div>
+
+        <div class="cyber-card p-4 mb-4">
+            <h2 class="section-title mb-3">第4条　コンテンツの取扱い</h2>
+            <p class="body-text">
+                ユーザーが投稿したコンテンツの著作権はユーザー本人に帰属します。ただし、本サービスの運営・改善・プロモーション等の目的において、投稿コンテンツを無償で利用できるものとします。
+            </p>
+        </div>
+
+        <div class="cyber-card p-4 mb-4">
+            <h2 class="section-title mb-3">第5条　免責事項</h2>
+            <ul class="body-text" style="padding-left: 1.2rem;">
+                <li>本サービスは、コンテンツの正確性・有用性を保証しません</li>
+                <li>ユーザー間のトラブルについて、本サービスは一切の責任を負いません</li>
+                <li>システム障害・メンテナンス等による一時的なサービス停止について、責任を負いません</li>
+                <li>本サービスの利用によって生じた損害について、当サービスの故意または重過失がある場合を除き責任を負いません</li>
+            </ul>
+        </div>
+
+        <div class="cyber-card p-4 mb-4">
+            <h2 class="section-title mb-3">第6条　サービスの変更・停止</h2>
+            <p class="body-text">
+                本サービスは、事前の通知なく、サービスの内容変更・一時停止・終了を行う場合があります。重要な変更については、可能な範囲で事前にお知らせします。
+            </p>
+        </div>
+
+        <div class="cyber-card p-4 mb-4">
+            <h2 class="section-title mb-3">第7条　アカウントの停止・削除</h2>
+            <p class="body-text">
+                本規約に違反した場合、または不適切な利用と判断した場合、当サービスは事前の通知なくアカウントを停止・削除することができます。
+            </p>
+        </div>
+
+        <div class="cyber-card p-4 mb-4">
+            <h2 class="section-title mb-3">第8条　規約の変更</h2>
+            <p class="body-text">
+                本規約は必要に応じて変更することがあります。変更後も継続してご利用いただいた場合、変更後の規約に同意したものとみなします。
+            </p>
+        </div>
+
+        <div class="cyber-card p-4 mb-4">
+            <h2 class="section-title mb-3">第9条　準拠法・管轄裁判所</h2>
+            <p class="body-text">
+                本規約の解釈には日本法を準拠法とし、本サービスに関連する紛争については、運営者の所在地を管轄する裁判所を第一審の専属的合意管轄裁判所とします。
+            </p>
+        </div>
+
+        <p class="body-text" style="opacity: 0.5; font-size: 0.75rem;">制定日：2026年1月1日</p>
+    </div>
+
+    <footer class="py-4" style="background: rgba(0, 0, 0, 0.9); border-top: 1px solid var(--cyber-pink);">
+        <div class="container">
+            <div class="d-flex flex-wrap justify-content-center gap-4 footer-links">
+                <a href="/privacy">プライバシーポリシー</a>
+                <a href="/tokusho">特定商取引法に基づく表記</a>
+                <a href="/terms">利用規約</a>
+                <a href="https://forms.gle/iNBMopAn91qZBV3AA" target="_blank" rel="noopener noreferrer">お問い合わせ</a>
+            </div>
+            <p class="text-center mt-3 mb-0" style="color: var(--cyber-blue); font-size: 0.75rem; opacity: 0.6;">© SuguriMori / 979works</p>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>プライバシーポリシー - 電脳図書館</title>
+    <link rel="icon" href="{{ url_for('static', filename='logo.png') }}" type="image/png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --cyber-blue: #00fff2;
+            --cyber-pink: #ff00de;
+        }
+        body {
+            background-image: url("{{ url_for('static', filename='cyber_bg.png') }}") !important;
+            background-size: cover !important;
+            background-position: center center !important;
+            background-attachment: fixed !important;
+            background-color: #0d0d0d !important;
+            color: #e0e0e0 !important;
+            font-family: 'Segoe UI', sans-serif;
+            min-height: 100vh;
+        }
+        .neon-text {
+            color: var(--cyber-blue);
+            text-shadow: 0 0 10px var(--cyber-blue), 0 0 20px var(--cyber-blue);
+            font-weight: bold;
+        }
+        .navbar-cyber {
+            background-color: rgba(0, 0, 0, 0.95) !important;
+            border-bottom: 2px solid var(--cyber-pink);
+            box-shadow: 0 0 20px rgba(255, 0, 222, 0.5);
+        }
+        .cyber-card {
+            background: rgba(10, 10, 25, 0.9) !important;
+            border: 1px solid var(--cyber-blue) !important;
+            border-radius: 10px;
+            backdrop-filter: blur(5px);
+        }
+        .section-title {
+            color: var(--cyber-blue);
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            border-left: 3px solid var(--cyber-pink);
+            padding-left: 10px;
+        }
+        .body-text {
+            color: #b0fbff;
+            font-size: 0.85rem;
+            line-height: 2;
+            text-shadow: 0 0 5px rgba(0, 255, 242, 0.3);
+        }
+        .footer-links a {
+            color: #b0fbff;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            text-decoration: none;
+            opacity: 0.8;
+        }
+        .footer-links a:hover {
+            opacity: 1;
+            text-shadow: 0 0 8px var(--cyber-blue);
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-cyber mb-5">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="/">
+                <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" width="45" height="45" class="me-3">
+                <span class="neon-text h2 mb-0">電脳図書館</span>
+            </a>
+            <a href="/" style="color: var(--cyber-blue); font-size: 0.8rem; letter-spacing: 2px; text-decoration: none;">&lt;&lt; TOP へ戻る</a>
+        </div>
+    </nav>
+
+    <div class="container" style="max-width: 800px; padding-bottom: 60px;">
+        <h1 class="neon-text mb-5" style="font-size: 1.4rem; letter-spacing: 3px;">>> PRIVACY_POLICY: プライバシーポリシー</h1>
+
+        <div class="cyber-card p-4 mb-4">
+            <p class="body-text">
+                電脳図書館（以下「本サービス」）は、ユーザーの個人情報の取扱いについて、以下のとおりプライバシーポリシー（以下「本ポリシー」）を定めます。
+            </p>
+        </div>
+
+        <div class="cyber-card p-4 mb-4">
+            <h2 class="section-title mb-3">第1条　収集する情報</h2>
+            <p class="body-text mb-2">本サービスは、以下の情報を収集することがあります。</p>
+            <ul class="body-text" style="padding-left: 1.2rem;">
+                <li>ユーザー名（アカウント登録時）</li>
+                <li>ユーザーが投稿するコンテンツ（タイトル・プロンプト・本文等）</li>
+                <li>アクセスログ（IPアドレス、ブラウザ情報、閲覧ページ等）</li>
+                <li>Cookie等の技術的情報</li>
+            </ul>
+        </div>
+
+        <div class="cyber-card p-4 mb-4">
+            <h2 class="section-title mb-3">第2条　利用目的</h2>
+            <ul class="body-text" style="padding-left: 1.2rem;">
+                <li>本サービスの提供・運営・改善</li>
+                <li>ユーザーへのお知らせ・サポートの提供</li>
+                <li>不正利用の防止および安全確保</li>
+                <li>利用状況の分析・統計処理</li>
+            </ul>
+        </div>
+
+        <div class="cyber-card p-4 mb-4">
+            <h2 class="section-title mb-3">第3条　第三者への提供</h2>
+            <p class="body-text mb-2">本サービスは、以下のいずれかに該当する場合を除き、ユーザーの個人情報を第三者に提供しません。</p>
+            <ul class="body-text" style="padding-left: 1.2rem;">
+                <li>ユーザーの同意がある場合</li>
+                <li>法令に基づく開示要請があった場合</li>
+                <li>人の生命・身体・財産の保護に必要な場合</li>
+            </ul>
+        </div>
+
+        <div class="cyber-card p-4 mb-4">
+            <h2 class="section-title mb-3">第4条　安全管理措置</h2>
+            <p class="body-text">
+                本サービスは、収集した個人情報の漏洩・滅失・毀損を防止するため、適切な安全管理措置を講じます。
+            </p>
+        </div>
+
+        <div class="cyber-card p-4 mb-4">
+            <h2 class="section-title mb-3">第5条　個人情報の開示・訂正・削除</h2>
+            <p class="body-text">
+                ユーザーは、本サービスが保有する自身の個人情報について、開示・訂正・削除を請求できます。
+                <a href="https://forms.gle/iNBMopAn91qZBV3AA" target="_blank" rel="noopener noreferrer" style="color: var(--cyber-blue);">お問い合わせフォーム</a>よりご連絡ください。
+            </p>
+        </div>
+
+        <div class="cyber-card p-4 mb-4">
+            <h2 class="section-title mb-3">第6条　プライバシーポリシーの変更</h2>
+            <p class="body-text">
+                本ポリシーは、必要に応じて改定することがあります。重要な変更がある場合は、本サービス上でお知らせします。改定後も引き続きご利用いただいた場合、変更後のポリシーに同意したものとみなします。
+            </p>
+        </div>
+
+        <div class="cyber-card p-4 mb-4">
+            <h2 class="section-title mb-3">第7条　お問い合わせ</h2>
+            <p class="body-text">
+                個人情報の取扱いに関するご質問・ご要望は、
+                <a href="https://forms.gle/iNBMopAn91qZBV3AA" target="_blank" rel="noopener noreferrer" style="color: var(--cyber-blue);">お問い合わせフォーム</a>
+                よりご連絡ください。
+            </p>
+        </div>
+
+        <p class="body-text" style="opacity: 0.5; font-size: 0.75rem;">制定日：2026年1月1日</p>
+    </div>
+
+    <footer class="py-4" style="background: rgba(0, 0, 0, 0.9); border-top: 1px solid var(--cyber-pink);">
+        <div class="container">
+            <div class="d-flex flex-wrap justify-content-center gap-4 footer-links">
+                <a href="/privacy">プライバシーポリシー</a>
+                <a href="/tokusho">特定商取引法に基づく表記</a>
+                <a href="/terms">利用規約</a>
+                <a href="https://forms.gle/iNBMopAn91qZBV3AA" target="_blank" rel="noopener noreferrer">お問い合わせ</a>
+            </div>
+            <p class="text-center mt-3 mb-0" style="color: var(--cyber-blue); font-size: 0.75rem; opacity: 0.6;">© SuguriMori / 979works</p>
+        </div>
+    </footer>
+</body>
+</html>

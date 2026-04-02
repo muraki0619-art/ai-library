@@ -187,6 +187,18 @@ def update_user():
     db.session.commit()
     return redirect(url_for('mypage', username=new_name))
 
+@app.route('/privacy')
+def privacy():
+    return render_template('privacy.html')
+
+@app.route('/terms')
+def terms():
+    return render_template('terms.html')
+
+@app.route('/tokusho')
+def tokusho():
+    return render_template('tokusho.html')
+
 # データベース初期化
 with app.app_context():
     db.create_all()
