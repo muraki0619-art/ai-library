@@ -64,6 +64,13 @@ def payment_success():
 # --- 2. データベース初期化 (設定の後に実行) ---
 db = SQLAlchemy(app)
 
+# --- カスタムフィルター: 改行をbrタグに変換 ---
+from markupsafe import Markup, escape
+
+@app.template_filter('linebreaksbr')
+def linebreaksbr_filter(value):
+    return Markup(escape(value).replace('\n', Markup('<br>\n')))
+
 # --- カスタムフィルター: 相対時間表示 ---
 @app.template_filter('time_since')
 def time_since(dt):
