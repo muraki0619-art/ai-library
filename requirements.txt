@@ -3,3 +3,4 @@ flask-sqlalchemy
 flask-login
 gunicorn
 stripe
+psycopg2-binary
