@@ -20,7 +20,7 @@
                 <h6>💡 プロンプト</h6>
                 <pre class="p-3 bg-light rounded">{{ post.prompt }}</pre>
                 <h6>📝 生成内容</h6>
-                <div class="p-3 border rounded shadow-sm">{{ post.content }}</div>
+                <div class="p-3 border rounded shadow-sm">{{ post.content | linebreak sbr}}</div>
             </div>
         </div>
     </div>
