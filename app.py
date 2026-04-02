@@ -69,7 +69,11 @@ from markupsafe import Markup, escape
 
 @app.template_filter('linebreaksbr')
 def linebreaksbr_filter(value):
-    return Markup(escape(value).replace('\n', Markup('<br>\n')))
+    import re
+    escaped = str(escape(value))
+    result = re.sub(r'\n{2,}', '<br><br>', escaped)
+    result = result.replace('\n', '<br>')
+    return Markup(result)
 
 # --- カスタムフィルター: 相対時間表示 ---
 @app.template_filter('time_since')
