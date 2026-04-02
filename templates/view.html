@@ -4,23 +4,36 @@
     <meta charset="UTF-8">
     <title>{{ post.title }} - AI Library</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* 改行と段落をきれいに見せるための設定 */
+        .content-area {
+            white-space: pre-wrap; /* これで改行コードをそのまま反映 */
+            line-height: 1.8;      /* 行間を広げて読みやすく */
+            font-size: 1.05rem;
+        }
+        pre {
+            white-space: pre-wrap; /* プロンプトが横に突き抜けないように */
+            word-wrap: break-word;
+        }
+    </style>
 </head>
 <body class="bg-light py-5">
     <div class="container">
         <a href="/" class="btn btn-sm btn-secondary mb-3">← 戻る</a>
         <div class="card shadow">
-            <div class="card-header bg-white">
-                <span class="badge bg-primary">{{ post.genre }}</span>
-                <h1 class="h3 mt-2">{{ post.title }}</h1>
+            <div class="card-header bg-white p-4">
+                <span class="badge bg-primary mb-2">{{ post.genre }}</span>
+                <h1 class="h3">{{ post.title }}</h1>
                 <p class="small text-muted mb-0">
                     作者: {{ post.username }} | AI: {{ post.ai_model }} | 投稿: {{ post.created_at | time_since }} | 閲覧数: {{ post.views }}
                 </p>
             </div>
-            <div class="card-body">
-                <h6>💡 プロンプト</h6>
-                <pre class="p-3 bg-light rounded">{{ post.prompt }}</pre>
-                <h6>📝 生成内容</h6>
-                <div class="p-3 border rounded shadow-sm">{{ post.content | linebreaksbr}}</div>
+            <div class="card-body p-4">
+                <h6 class="text-primary">💡 プロンプト</h6>
+                <pre class="p-3 bg-light border rounded mb-4">{{ post.prompt }}</pre>
+                
+                <h6 class="text-primary">📝 生成内容</h6>
+                <div class="p-3 border rounded shadow-sm bg-white content-area">{{ post.content | linebreaksbr }}</div>
             </div>
         </div>
     </div>
