@@ -112,7 +112,7 @@ login_manager.login_view = 'login'
 
 @login_manager.user_loader
 def load_user(user_id):
-    return User.query.get(int(user_id))
+    return db.session.get(User, int(user_id))
 
 # --- ルート設定 ---
 @app.route('/')
@@ -176,7 +176,7 @@ def post_work():
 
 @app.route('/view/<int:post_id>')
 def view_post(post_id):
-    post = Post.query.get_or_404(post_id)
+    post = db.get_or_404(Post, post_id)
     post.views += 1
     db.session.commit()
     return render_template('view.html', post=post)
@@ -197,7 +197,7 @@ def mypage(username):
 @app.route('/edit/<int:post_id>', methods=['GET', 'POST'])
 @login_required
 def edit_post(post_id):
-    post = Post.query.get_or_404(post_id)
+    post = db.get_or_404(Post, post_id)
     if post.username != current_user.username:
         return "権限がありません", 403
     if request.method == 'POST':
