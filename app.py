@@ -6,6 +6,20 @@ from datetime import datetime, timedelta
 import os
 import stripe
 
+app = Flask(__name__)
+
+# --- 1. データベース設定 (先に定義) ---
+# 環境変数 DATABASE_URL を取得。なければ SQLite を使う
+uri = os.environ.get('DATABASE_URL', 'sqlite:///ai_library.db')
+
+# postgres:// を postgresql:// に変換 (SQLAlchemyの仕様対策)
+if uri.startswith("postgres://"):
+    uri = uri.replace("postgres://", "postgresql://", 1)
+
+app.config['SQLALCHEMY_DATABASE_URI'] = uri
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SECRET_KEY'] = 'your-cyber-secret-key' # 本番用シークレットキー
+
 # Stripeのテスト用秘密鍵（Stripeダッシュボードから取得したものに後で置き換えます）
 stripe.api_key = os.environ.get('STRIPE_SECRET_KEY', 'sk_test_51P...') 
 
@@ -46,19 +60,6 @@ def payment_success():
     db.session.commit()
     return "🚀 決済が承認されました！あなたの権限が「プロプラン」にアップグレードされました。<a href='/'>トップへ戻る</a>"
 
-app = Flask(__name__)
-
-# --- 1. データベース設定 (先に定義) ---
-# 環境変数 DATABASE_URL を取得。なければ SQLite を使う
-uri = os.environ.get('DATABASE_URL', 'sqlite:///ai_library.db')
-
-# postgres:// を postgresql:// に変換 (SQLAlchemyの仕様対策)
-if uri.startswith("postgres://"):
-    uri = uri.replace("postgres://", "postgresql://", 1)
-
-app.config['SQLALCHEMY_DATABASE_URI'] = uri
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SECRET_KEY'] = 'your-cyber-secret-key' # 本番用シークレットキー
 
 # --- 2. データベース初期化 (設定の後に実行) ---
 db = SQLAlchemy(app)
