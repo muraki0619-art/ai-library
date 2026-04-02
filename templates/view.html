@@ -2,39 +2,115 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>{{ post.title }} - AI Library</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ post.title }} - 979works AI Library</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    
     <style>
-        /* 改行と段落をきれいに見せるための設定 */
-        .content-area {
-            white-space: pre-wrap; /* これで改行コードをそのまま反映 */
-            line-height: 1.8;      /* 行間を広げて読みやすく */
-            font-size: 1.05rem;
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Noto Sans JP', sans-serif;
+            color: #333;
         }
-        pre {
-            white-space: pre-wrap; /* プロンプトが横に突き抜けないように */
+        .container {
+            max-width: 900px; /* 読みやすい横幅に制限 */
+        }
+        .card {
+            border: none;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+        .card-header {
+            border-bottom: 1px solid #eee;
+            padding: 2rem;
+        }
+        .post-meta {
+            font-size: 0.85rem;
+            color: #6c757d;
+        }
+        /* 💡 プロンプト表示エリア */
+        .prompt-area {
+            background-color: #f1f3f5;
+            border-radius: 10px;
+            padding: 1.5rem;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9rem;
+            white-space: pre-wrap; /* 改行を維持 */
             word-wrap: break-word;
+            border-left: 5px solid #dee2e6;
+        }
+        /* 📝 生成内容表示エリア (ここが重要！) */
+        .content-area {
+            background-color: #ffffff;
+            line-height: 2.2;         /* 行間をたっぷり開ける */
+            font-size: 1.1rem;        /* 少し大きめの文字 */
+            letter-spacing: 0.03em;   /* 文字間隔を微調整 */
+            white-space: pre-wrap;    /* 改行を維持し、端で折り返す */
+            word-wrap: break-word;
+            text-align: justify;      /* 両端揃えで美しく */
+            padding: 2rem;
+            border: 1px solid #eee;
+            border-radius: 10px;
+        }
+        .section-title {
+            font-weight: 700;
+            color: #007bff;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+        .btn-back {
+            border-radius: 8px;
+            padding: 8px 20px;
+            transition: 0.2s;
         }
     </style>
 </head>
-<body class="bg-light py-5">
+<body class="py-5">
     <div class="container">
-        <a href="/" class="btn btn-sm btn-secondary mb-3">← 戻る</a>
-        <div class="card shadow">
-            <div class="card-header bg-white p-4">
-                <span class="badge bg-primary mb-2">{{ post.genre }}</span>
-                <h1 class="h3">{{ post.title }}</h1>
-                <p class="small text-muted mb-0">
-                    作者: {{ post.username }} | AI: {{ post.ai_model }} | 投稿: {{ post.created_at | time_since }} | 閲覧数: {{ post.views }}
-                </p>
+        <div class="mb-4">
+            <a href="/" class="btn btn-secondary btn-back shadow-sm">← 戻る</a>
+        </div>
+
+        <div class="card shadow-sm">
+            <div class="card-header bg-white">
+                <span class="badge bg-primary mb-3">{{ post.genre }}</span>
+                <h1 class="display-6 fw-bold mb-3">{{ post.title }}</h1>
+                <div class="post-meta">
+                    <span>👤 作者: <strong>{{ post.username }}</strong></span>
+                    <span class="mx-2">|</span>
+                    <span>🤖 AI: {{ post.ai_model }}</span>
+                    <span class="mx-2">|</span>
+                    <span>📅 {{ post.created_at | time_since }}</span>
+                    <span class="mx-2">|</span>
+                    <span>👁️ {{ post.views }} views</span>
+                </div>
             </div>
-            <div class="card-body p-4">
-                <h6 class="text-primary">💡 プロンプト</h6>
-                <pre class="p-3 bg-light border rounded mb-4">{{ post.prompt }}</pre>
-                
-                <h6 class="text-primary">📝 生成内容</h6>
-                <div class="p-3 border rounded shadow-sm bg-white content-area">{{ post.content | linebreaksbr }}</div>
+
+            <div class="card-body p-4 p-md-5">
+                <div class="mb-5">
+                    <h6 class="section-title">
+                        <span class="me-2">💡</span> PROMPT
+                    </h6>
+                    <div class="prompt-area">
+                        {{ post.prompt }}
+                    </div>
+                </div>
+
+                <div>
+                    <h6 class="section-title">
+                        <span class="me-2">📝</span> CONTENT
+                    </h6>
+                    <div class="content-area shadow-sm">
+                        {{ post.content | linebreaksbr }}
+                    </div>
+                </div>
             </div>
+        </div>
+
+        <div class="text-center mt-5 text-muted small">
+            &copy; 2026 979works AI Library
         </div>
     </div>
 </body>
